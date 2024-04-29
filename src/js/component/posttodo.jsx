@@ -1,42 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const PostNewTask = () => {
+const PostNewTask = ({ onNewTask }) => {
+  const [newtask, setNewTask] = useState("");
 
-    const [newtask, setNewTask] = useState("");
-
-    function crearTarea() {
-        fetch(`https://playground.4geeks.com/todo/todos/${user_name}`, {
-            method: 'POST',
-            mode: 'cors',
-            redirect: 'follow',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: JSON.stringify({
-                "label": "Actividad 2",
-                "is_done": false
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && newtask !== "") {
+      // Aquí va el código que se ejecutará cuando se presione Enter
+      crearTarea();
+      setNewTask("");
     }
+  };
 
-    return(
-        <div className="container">
-            <ul className="list-group shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-                <li className="list-group-item opacity-50">
-                    <input type="text" value={newtask} onChange={(e) => setNewTask(e.target.value)} />
-                    <button className="btn btn-success" onClick={crearTarea}>Crear tarea</button>
-                </li>
-            </ul>
-        </div>
-    );
-	
-}; 
+  function crearTarea() {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      label: newtask,
+      is_done: false,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("https://playground.4geeks.com/todo/todos/iker", requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        onNewTask();
+      })
+      .catch((error) => console.error(error));
+  }
+
+  return (
+    <div className="container">
+      <li className="list-group-item opacity-50">
+        <input
+          type="text"
+          className="form-control form-control-lg"
+          placeholder="What needs to be done?"
+          value={newtask}
+          onChange={(e) => setNewTask(e.target.value)}
+          onKeyDown={handleKeyPress}
+        />
+      </li>
+    </div>
+  );
+};
 
 export default PostNewTask;
