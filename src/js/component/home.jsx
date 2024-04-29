@@ -7,8 +7,7 @@ import PostNewTask from "./posttodo.jsx";
 
 //create your first component
 
-const Home = (props) => {
-  const { iden } = props;
+const Home = () => {
 
   const [list, setList] = useState([]);
   const [trigger, setTrigger] = useState(false);
@@ -29,7 +28,7 @@ const Home = (props) => {
 
   return (
     <div className="text-center">
-      <h1>Todo List</h1>
+      <h1>Todo List </h1>
       <div className="container">
         <ul className="list-group">
           <li className="list-group-item">

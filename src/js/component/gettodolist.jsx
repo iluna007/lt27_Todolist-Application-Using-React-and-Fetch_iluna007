@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Delete from "./delete.jsx";
 
 const GetTodolist = (props) => {
-  const { id, iden, handleNewTask1 } = props;
+  const { iden, handleNewTask1 } = props;
   return (
     <div className="container">
       <div className="text-start mt-5">

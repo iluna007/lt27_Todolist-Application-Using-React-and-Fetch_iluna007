@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const PostNewTask = ({ onNewTask }) => {
   const [newtask, setNewTask] = useState("");
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter" && newtask !== "") {
-      // Aquí va el código que se ejecutará cuando se presione Enter
       crearTarea();
       setNewTask("");
     }
